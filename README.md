@@ -30,6 +30,10 @@ docker run --rm -v $(pwd):/work jasdefer/docker-pdf-signer:latest \
   --scale 0.3
 ```
 
+## Example
+
+![Usage example](docker-pdf-signer.gif)
+
 ## Arguments
 
 - `--pdf`: Input PDF file (required)
