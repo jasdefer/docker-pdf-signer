@@ -1,4 +1,9 @@
 # docker-pdf-signer
+
+<p align="center">
+  <img src="logo.svg" width="160" alt="Project Logo">
+</p>
+
 A lightweight Dockerized CLI tool that adds an SVG signature to a PDF without local installations. Mount a folder, specify page, position, and scale, and the container embeds the signature as true vector graphics. Outputs a signed PDF with deterministic placement and full multi-page support.
 
 ## Usage

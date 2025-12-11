@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <path style="fill: none; stroke: rgb(251, 192, 45); stroke-width: 16px; stroke-linecap: round;" d="M 37.64 255.087 C 37.64 255.087 46.068 431.795 70.074 414.452 C 94.08 397.109 85.148 298.066 110.515 337.572 C 135.882 377.078 175.555 475.568 224.633 426.865 C 273.711 378.162 124.13 366.402 165.773 336.371"/>
+  <rect x="277" y="8" width="215" height="215" style="stroke: rgb(66, 66, 66); stroke-width: 16px; stroke-linejoin: round; fill: rgb(238, 238, 238);"/>
+  <rect x="277" y="277" width="215" height="215" style="stroke: rgb(66, 66, 66); stroke-width: 16px; stroke-linejoin: round; fill: rgb(238, 238, 238);"/>
+  <rect x="8" y="8" width="215" height="215" style="stroke: rgb(66, 66, 66); stroke-width: 16px; stroke-linejoin: round; fill: rgb(238, 238, 238);"/>
+  <g transform="matrix(-0.707106, -0.707107, 0.707107, -0.707106, 317.196167, 502.097687)">
+    <rect x="174.582" y="109.209" width="100" height="200" style="stroke: rgb(66, 66, 66); stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; fill: rgb(238, 238, 238);"/>
+    <path d="M 224.582 9.209 L 274.582 109.209 L 174.582 109.209 L 224.582 9.209 Z" style="stroke: rgb(66, 66, 66); stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; fill: rgb(251, 192, 45);" bx:shape="triangle 174.582 9.209 100 100 0.5 0 1@f9648da7"/>
+    <path d="M 224.582 359.209 C 196.968 359.209 174.582 336.823 174.582 309.209 L 274.582 309.209 C 274.582 336.823 252.196 359.209 224.582 359.209 Z" style="stroke: rgb(66, 66, 66); stroke-width: 16px; stroke-linejoin: round; fill: rgb(238, 238, 238);"/>
+  </g>
+</svg>
