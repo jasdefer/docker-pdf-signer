@@ -3,33 +3,20 @@ A lightweight Dockerized CLI tool that adds an SVG signature to a PDF without lo
 
 ## Usage
 
-### Using the Pre-built Docker Image from Docker Hub
-
-The easiest way to use docker-pdf-signer is to pull the pre-built image from Docker Hub:
+Pull the pre-built image from Docker Hub or build it locally:
 
 ```bash
+# Option 1: Pull from Docker Hub
 docker pull jasdefer/docker-pdf-signer:latest
+
+# Option 2: Build locally
+docker build -t jasdefer/docker-pdf-signer .
 ```
 
-Then run the container with your PDF and signature files:
+Run the container with your PDF and signature files:
 
 ```bash
 docker run --rm -v $(pwd):/work jasdefer/docker-pdf-signer:latest \
-  --pdf test.pdf \
-  --signature signature.svg \
-  --page 1 \
-  --rel-x 0.5 \
-  --rel-y 0.1 \
-  --scale 0.3
-```
-
-### Building Locally
-
-If you prefer to build the Docker image yourself:
-
-```bash
-docker build -t docker-pdf-signer .
-docker run --rm -v $(pwd):/work docker-pdf-signer \
   --pdf test.pdf \
   --signature signature.svg \
   --page 1 \
@@ -43,11 +30,11 @@ docker run --rm -v $(pwd):/work docker-pdf-signer \
 - `--pdf`: Input PDF file (required)
 - `--signature`: SVG signature file (default: signature.svg)
 - `--page`: Page number to sign (1-based, required)
-- `--scale`: Scale factor for the signature (required)
-- `--x` / `--y`: Absolute coordinates in points
-- `--rel-x` / `--rel-y`: Relative coordinates (0-1 range)
-- `--output`: Custom output filename
-- `--overwrite`: Overwrite the original PDF instead of creating a .signed.pdf file
+- `--scale`: Scale factor for the signature size (required). Values <1 shrink the signature, values >1 increase its size
+- `--x` / `--y`: Absolute coordinates in points for signature placement. `--x` controls horizontal position (left to right), `--y` controls vertical position (bottom to top). Larger values move the signature right and up
+- `--rel-x` / `--rel-y`: Relative coordinates in the range 0-1 for signature placement. `--rel-x` controls horizontal position (0=left edge, 1=right edge), `--rel-y` controls vertical position (0=bottom edge, 1=top edge). Cannot be used together with `--x`/`--y`
+- `--output`: Custom output filename. If not specified, creates a file with `.signed.pdf` suffix (e.g., `document.pdf` becomes `document.signed.pdf`)
+- `--overwrite`: Overwrite the original PDF instead of creating a new file
 
 ## Docker Hub
 
