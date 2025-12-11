@@ -1,4 +1,5 @@
 import argparse
+import logging
 from pdfrw import PdfReader, PdfWriter, PageMerge
 from reportlab.pdfgen import canvas
 from svglib.svglib import svg2rlg
@@ -120,6 +121,12 @@ def main():
 
     print(f"Written signed PDF to: {output_path}")
 
+def quiet_pdfrw():
+    # Set pdfrw-related loggers to ERROR or higher
+    logging.getLogger("pdfrw").setLevel(logging.ERROR)
+    logging.getLogger("pdfrw.tokens").setLevel(logging.ERROR)
+    logging.getLogger("pdfrw.pdfreader").setLevel(logging.ERROR)
 
 if __name__ == "__main__":
+    quiet_pdfrw()
     main()
