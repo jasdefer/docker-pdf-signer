@@ -8,7 +8,7 @@ import os
 import tempfile
 
 
-def create_overlay(page, svg_path, x, y, scale):
+def create_overlay(page, svg_path, x, y, scale, text=None, text_x=None, text_y=None, text_size=12):
     media_box = page.MediaBox
     page_width = float(media_box[2]) - float(media_box[0])
     page_height = float(media_box[3]) - float(media_box[1])
@@ -17,9 +17,17 @@ def create_overlay(page, svg_path, x, y, scale):
     os.close(fd)
 
     c = canvas.Canvas(overlay_path, pagesize=(page_width, page_height))
+    
+    # Draw signature
     drawing = svg2rlg(svg_path)
     drawing.scale(scale, scale)
     renderPDF.draw(drawing, c, x, y)
+
+    # Draw text if provided
+    if text is not None and text_x is not None and text_y is not None:
+        c.setFillColorRGB(0, 0, 0)  # Black color
+        c.setFont("Helvetica", text_size)
+        c.drawString(text_x, text_y, text)
 
     c.showPage()
     c.save()
@@ -56,6 +64,14 @@ def main():
         action="store_true",
         help="Overwrite the original PDF instead of creating a .signed.pdf file"
     )
+
+    # Text overlay options
+    parser.add_argument("--text", type=str, help="Text string to render next to signature")
+    parser.add_argument("--text-size", type=float, default=12.0, help="Font size in points (default: 12)")
+    parser.add_argument("--text-x", type=float, help="Text X absolute coord in points")
+    parser.add_argument("--text-y", type=float, help="Text Y absolute coord in points")
+    parser.add_argument("--text-rel-x", type=float, help="Text relative X in [0,1]")
+    parser.add_argument("--text-rel-y", type=float, help="Text relative Y in [0,1]")
 
     args = parser.parse_args()
 
@@ -101,7 +117,34 @@ def main():
             raise SystemExit("Both --x and --y must be provided when using absolute coords")
         x, y = args.x, args.y
 
-    overlay_page = create_overlay(page, sig_path, x, y, args.scale)
+    # Text coordinate validation and calculation
+    text_x = None
+    text_y = None
+    if args.text:
+        using_text_rel = (args.text_rel_x is not None or args.text_rel_y is not None)
+        using_text_abs = (args.text_x is not None or args.text_y is not None)
+
+        if using_text_rel and using_text_abs:
+            raise SystemExit("Use either --text-x/--text-y OR --text-rel-x/--text-rel-y, not both")
+        
+        if not using_text_rel and not using_text_abs:
+            raise SystemExit("When --text is provided, specify either absolute (--text-x/--text-y) or relative (--text-rel-x/--text-rel-y)")
+
+        if using_text_rel:
+            if args.text_rel_x is None or args.text_rel_y is None:
+                raise SystemExit("Both --text-rel-x and --text-rel-y must be provided when using relative coords")
+            if not (0 <= args.text_rel_x <= 1 and 0 <= args.text_rel_y <= 1):
+                raise SystemExit("--text-rel-x and --text-rel-y must be in [0,1]")
+            text_x = args.text_rel_x * page_width
+            text_y = args.text_rel_y * page_height
+        else:
+            if args.text_x is None or args.text_y is None:
+                raise SystemExit("Both --text-x and --text-y must be provided when using absolute coords")
+            text_x, text_y = args.text_x, args.text_y
+
+    overlay_page = create_overlay(page, sig_path, x, y, args.scale, 
+                                   text=args.text, text_x=text_x, text_y=text_y, 
+                                   text_size=args.text_size)
     merger = PageMerge(page)
     merger.add(overlay_page)
     merger.render()
