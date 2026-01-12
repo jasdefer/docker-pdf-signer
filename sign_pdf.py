@@ -132,19 +132,20 @@ def main():
 
         if using_text_rel:
             if args.text_rel_x is None or args.text_rel_y is None:
-                raise SystemExit("Both --text-rel-x and --text-rel-y must be provided when using relative coords")
+                raise SystemExit("Both --text-rel-x and --text-rel-y must be provided when using relative text coords")
             if not (0 <= args.text_rel_x <= 1 and 0 <= args.text_rel_y <= 1):
                 raise SystemExit("--text-rel-x and --text-rel-y must be in [0,1]")
             text_x = args.text_rel_x * page_width
             text_y = args.text_rel_y * page_height
         else:
             if args.text_x is None or args.text_y is None:
-                raise SystemExit("Both --text-x and --text-y must be provided when using absolute coords")
+                raise SystemExit("Both --text-x and --text-y must be provided when using absolute text coords")
             text_x, text_y = args.text_x, args.text_y
 
-    overlay_page = create_overlay(page, sig_path, x, y, args.scale, 
-                                   text=args.text, text_x=text_x, text_y=text_y, 
-                                   text_size=args.text_size)
+    overlay_page = create_overlay(
+        page, sig_path, x, y, args.scale,
+        text=args.text, text_x=text_x, text_y=text_y, text_size=args.text_size
+    )
     merger = PageMerge(page)
     merger.add(overlay_page)
     merger.render()
