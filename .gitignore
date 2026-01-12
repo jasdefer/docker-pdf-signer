@@ -1,3 +1,7 @@
 signature.svg
 test.pdf
 test.signed.pdf
+__pycache__/
+*.pyc
+TESTING.md
+validate_text_feature.py

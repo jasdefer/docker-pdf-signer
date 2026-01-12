@@ -36,6 +36,8 @@ docker run --rm -v $(pwd):/work jasdefer/docker-pdf-signer:latest \
 
 ## Arguments
 
+### Signature options
+
 - `--pdf`: Input PDF file (required)
 - `--signature`: SVG signature file (default: signature.svg)
 - `--page`: Page number to sign (1-based, required)
@@ -44,6 +46,15 @@ docker run --rm -v $(pwd):/work jasdefer/docker-pdf-signer:latest \
 - `--rel-x` / `--rel-y`: Relative coordinates in the range 0-1 for signature placement. `--rel-x` controls horizontal position (0=left edge, 1=right edge), `--rel-y` controls vertical position (0=bottom edge, 1=top edge). Cannot be used together with `--x`/`--y`
 - `--output`: Custom output filename. If not specified, creates a file with `.signed.pdf` suffix (e.g., `document.pdf` becomes `document.signed.pdf`)
 - `--overwrite`: Overwrite the original PDF instead of creating a new file
+
+### Text overlay options
+
+- `--text`: Optional plain text string to render next to the signature (e.g., "Berlin, 2026-01-12")
+- `--text-size`: Font size in points for the text (default: 12)
+- `--text-x` / `--text-y`: Absolute coordinates in points for text placement
+- `--text-rel-x` / `--text-rel-y`: Relative coordinates in the range 0-1 for text placement. Cannot be used together with `--text-x`/`--text-y`
+
+When using `--text`, you must specify either absolute coordinates (`--text-x` and `--text-y`) or relative coordinates (`--text-rel-x` and `--text-rel-y`).
 
 ## Docker Hub
 
