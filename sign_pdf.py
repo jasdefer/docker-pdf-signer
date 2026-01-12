@@ -24,7 +24,7 @@ def create_overlay(page, svg_path, x, y, scale, text=None, text_x=None, text_y=N
     renderPDF.draw(drawing, c, x, y)
 
     # Draw text if provided
-    if text is not None and text_x is not None and text_y is not None:
+    if text:
         c.setFillColorRGB(0, 0, 0)  # Black color
         c.setFont("Helvetica", text_size)
         c.drawString(text_x, text_y, text)
